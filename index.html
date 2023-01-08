@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="lista_productos.js" type="text/javascript"></script>
+    <script src="app.js" type="text/javascript" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- Carrito -->
+    <section class="contenedor-carrito">
+        <aside class="carrito">
+            <i id="cerrar-carrito" class="fa-solid fa-chevron-right"></i>
+        </aside>
+    </section>
+
+    <!-- Productos y filtros -->
+    <section class="seccion-productos-filtros">
+        <div class="container-filtros">
+            <div class="filtros-sticky">
+                <form class="filtrar-nombre">
+                    <input id="busqueda-nombre" type="text" placeholder="Nombre">
+                </form>
+                <div class="filtros">
+                    <h3>Categorias</h2>
+                </div>
+                <div class="filtro-precio">
+                    <h4>Filtrar productos por precio máximo</h4>
+                    <form class="filtrar-precio">
+                        <input id="precio" type="range" min="0" max="200"value="0">
+                        <p>No se ha aplicado filtro de precio</p>
+                    </form>
+                </div>
+                <div class="filtro-fecha">
+                    <h4>Filtrar productos entre dos fechas</h4>
+                    <form class="filtrar-fecha">
+                        <input id="fecha-inicio" type="date">
+                        <span>a</span>
+                        <input id="fecha-tope" type="date">
+                        <i id="actualizar-fecha" class="fa-solid fa-arrow-rotate-right"></i>
+                    </form>
+                </div>
+                <div>
+                    <button id="abrir-carrito">Abrir carrito</button>
+                </div>
+            </div>
+        </div>
+        <div class="container-productos">
+            
+        </div>
+    </section>
+
+    <!-- Modal para las fotos de productos -->
+    <section class="modal-productos">
+        <i id="cerrar-modal" class="fa-solid fa-circle-xmark"></i>
+        <div class="contenido-modal">
+            <img src="" alt="">
+            <h3></h3>
+            <h4></h4>
+            <button>Añadir al carrito</button>
+        </div>
+    </section>
+</body>
+</html>
