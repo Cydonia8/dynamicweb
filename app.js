@@ -39,7 +39,7 @@ input_precio.setAttribute("max", precio_mayor)
 
 //Sacar fecha actual para el filtro de fechas
 const momento_actual = new Date()
-console.log(momento_actual)
+
 const fecha_actual = `${momento_actual.getFullYear()}-${cerosFecha(momento_actual.getMonth()+1)}-${cerosFecha(momento_actual.getDate())}`
 fecha_inicio.setAttribute("value", fecha_actual)
 fecha_tope.setAttribute("value", fecha_actual) 
@@ -85,8 +85,18 @@ input_precio.addEventListener("change", ()=>{
 
 //Filtrar por fecha
 actualizar_fecha.addEventListener("click", ()=>{
-    const fecha_inicial = fecha_inicio.value
-    const fecha_final = fecha_tope.value
+    const fecha_inicial = formatoFecha(fecha_inicio.value)
+    const fecha_final = formatoFecha(fecha_tope.value)
+
+    let filtro = productos.filter(item => formatoFechaObjeto(item.date) >= fecha_inicial && formatoFechaObjeto(item.date) <= fecha_final )
+
+    if(filtro.length === 0){
+        contenedor_productos.classList.add("no-resultados")
+        contenedor_productos.innerHTML="<h2>No hay productos que coincidan con la búsqueda</h2>"
+    }else{
+        contenedor_productos.classList.remove("no-resultados")
+        renderizar(filtro, contenedor_productos, crearProducto)
+    }
 
 })
 
@@ -111,7 +121,8 @@ function InicializarTienda(){
 
         if(pulsado.matches(".categoria")){
             let filtro;
-
+            contenedor_productos.classList.remove("no-resultados")
+            
             if(pulsado.innerText==="Todos"){
                 filtro = [...productos]
             }else{
@@ -134,6 +145,7 @@ function crearProducto(p){
                                 <p>${p.name}</p>
                                 <h3>${p.price}</h3>
                                 <h3>${p.category}</h3>
+                                <h4>${p.date}</h4>
                             </div>`;
 
     const imagen = producto.querySelector(".foto-producto");
@@ -174,10 +186,23 @@ function crearProductoCarrito(p){
 function cerosFecha(fecha){
     if(fecha < 10){
         return `0${fecha}`
+    }else{
+        return fecha
     }
 }
 
-// function formatoFecha(fecha){
-//     let timestamp = new Date(fecha).getTime()
-//     return `${cerosFecha(timestamp.)}`
-// }
+function formatoFecha(fecha){
+    let array_fecha = fecha.split("-")
+    let fecha_nueva = new Date(array_fecha[0], array_fecha[1]-1, array_fecha[2])
+    fecha_nueva.setHours(0,0,0,0)
+    
+    return fecha_nueva.getTime()
+}
+
+function formatoFechaObjeto(fecha){
+    let array_fecha = fecha.split("-")
+    let fecha_nueva = new Date(array_fecha[2], array_fecha[1]-1, array_fecha[0])
+    fecha_nueva.setHours(0,0,0,0)
+    
+    return fecha_nueva.getTime()
+}
