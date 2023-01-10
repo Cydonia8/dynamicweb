@@ -13,7 +13,7 @@ const actualizar_fecha = document.getElementById("actualizar-fecha")
 const mostrar_carrito = document.getElementById("abrir-carrito")
 const cerrar_carrito = document.getElementById("cerrar-carrito")
 const contenedor_carrito = document.querySelector(".contenedor-carrito")
-const carrito = document.querySelector(".carrito")
+const carrito = document.querySelector(".contenedor-productos-carrito")
 
 //DOM para el modal de los productos
 const modal_productos = document.querySelector(".modal-productos")
@@ -150,6 +150,7 @@ function crearProducto(p){
 
     const imagen = producto.querySelector(".foto-producto");
     const ampliar = producto.querySelector("i");
+
     imagen.addEventListener("mouseenter", ()=>{
         ampliar.classList.add("mostrar")
     })
@@ -159,16 +160,47 @@ function crearProducto(p){
     ampliar.addEventListener("click", (evento)=>{
         const padre = evento.currentTarget.parentElement.parentElement;
         const id = padre.getAttribute("data-id");
-        console.log(padre)
+        contenido_modal.setAttribute("data-product", id)
 
         const producto_buscado = productos.find(item => item.id === id);
-        contenido_modal.children[0].src=producto_buscado.image;
-        contenido_modal.children[1].innerText=producto_buscado.name
-        contenido_modal.children[2].innerText=producto_buscado.price
-        modal_productos.classList.add("mostrar")
+        contenido_modal.innerHTML=`<img src="${producto_buscado.image}" alt="">
+                                    <h3>${producto_buscado.name}</h3>
+                                    <h4>${producto_buscado.price}</h4>
+                                    <button class="añadir-producto">Añadir al carrito</button>`;
 
-    })
+        modal_productos.classList.add("mostrar")
+        const añadir_carrito = contenido_modal.querySelector(".añadir-producto")
+
+        añadir_carrito.addEventListener("click", (evento)=>{
+            const product_id = evento.target.parentElement.getAttribute("data-product")
+            const producto_buscar = productos.find(item => item.id===product_id)
+            console.log(producto_buscar)
+            const producto_creado = crearProductoCarrito(producto_buscar)
+            console.log(producto_creado)
+            carrito.appendChild(producto_creado)
+        })
+    }) 
     return producto
+}
+
+function crearProductoCarrito(producto){
+    const prod_carrito = document.createElement("div")
+    prod_carrito.classList.add("producto-carrito")
+    prod_carrito.setAttribute("data-product", producto.id)
+    prod_carrito.innerHTML = `<img src="${producto.image}" alt="">
+                        <div class="contenido">
+                            <span>${producto.name}</span>
+                            <span>${producto.price} €</span>
+                            <div class="botones-carrito">
+                                <button>
+                                    Cantidad<i class="fa-solid fa-plus"></i>
+                                </button>
+                                <button>
+                                    Eliminar<i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                        </div>`
+    return prod_carrito;    
 }
 
 function renderizar(lista_productos, contenedor_dom, crear_dom){
