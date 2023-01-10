@@ -100,7 +100,7 @@ box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
     width: 100%;
 }
 
-/* .contenedor-carrito{
+.contenedor-carrito{
     background-color: #00000044;
     height: 100vh;
     width: 100vw;
@@ -110,17 +110,44 @@ box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
     opacity: 0;
     z-index: -1;
     transition: .7s;
-    visibility: hidden;
-} */
+}
 .carrito{
     position: fixed;
     height: 100vh;
     width: 40vh;
-    background-color: rgba(33, 130, 190, 0.896);
+    background-color: whitesmoke;
     top: 0;
     right: 0;
     transform: translateX(100%);
     transition: .7s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Josefin Sans', sans-serif;
+}
+.carrito h3{
+    font-size: 1.5rem;
+}
+.vaciar-carrito{
+    position: absolute;
+    bottom: 10%;
+    background-color: rgba(33, 130, 190, 0.896);
+    border: none;
+    width: 60%;
+    padding: 1rem;
+    font-size: 1.3rem;
+}
+#cerrar-carrito{
+    position: absolute;
+    left: 5%;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    background-color: rgba(33, 130, 190, 0.896);
+    padding: 0.7rem;
+    border-radius: 60%;
+}
+#cerrar-carrito:hover{
+    cursor: pointer;
 }
 .mostrar .carrito{
     transform: translateX(0);
@@ -164,12 +191,15 @@ box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
 }
 .contenedor-productos-carrito div.producto-carrito{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 90%;
     margin: auto;
     background-color: white;
     border-radius: 15px;
     padding: 0.5rem;
+    -webkit-box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
+-moz-box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
+box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
 }
 .contenedor-productos-carrito{
     display: flex;
@@ -177,7 +207,7 @@ box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
     gap: 20px;
 }
 .contenedor-productos-carrito img{
-    width: 30%;
+    width: 40%;
     object-fit: cover;
     border-radius: 15px;
 }
@@ -185,11 +215,17 @@ box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     text-align: center;
+    width: 100%;
+}
+.contenido .nombre-producto{
+    font-weight: bold;
 }
 .botones-carrito{
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 .contenido button{
     border: none;

@@ -20,7 +20,8 @@ const modal_productos = document.querySelector(".modal-productos")
 const contenido_modal = document.querySelector(".contenido-modal")
 const cerrar_modal = document.getElementById("cerrar-modal")
 
-
+let recuento_carrito = JSON.parse(localStorage.getItem("carrito") ?? "[]")
+renderizar(recuento_carrito, carrito, crearProductoCarrito)
 //Configuración inicial de la interfaz
 
 mostrar_carrito.addEventListener("click", ()=>{
@@ -174,10 +175,11 @@ function crearProducto(p){
         añadir_carrito.addEventListener("click", (evento)=>{
             const product_id = evento.target.parentElement.getAttribute("data-product")
             const producto_buscar = productos.find(item => item.id===product_id)
-            console.log(producto_buscar)
+
             const producto_creado = crearProductoCarrito(producto_buscar)
-            console.log(producto_creado)
             carrito.appendChild(producto_creado)
+            recuento_carrito.push(producto_buscar)
+            localStorage.setItem("carrito", JSON.stringify(recuento_carrito))
         })
     }) 
     return producto
@@ -189,14 +191,14 @@ function crearProductoCarrito(producto){
     prod_carrito.setAttribute("data-product", producto.id)
     prod_carrito.innerHTML = `<img src="${producto.image}" alt="">
                         <div class="contenido">
-                            <span>${producto.name}</span>
-                            <span>${producto.price} €</span>
+                            <span class="nombre-producto">${producto.name}</span>
+                            <span class="precio-producto">${producto.price} €</span>
                             <div class="botones-carrito">
                                 <button>
-                                    Cantidad<i class="fa-solid fa-plus"></i>
+                                    Cantidad <i class="fa-solid fa-plus"></i>
                                 </button>
                                 <button>
-                                    Eliminar<i class="fa-solid fa-xmark"></i>
+                                    Eliminar <i class="fa-solid fa-xmark"></i>
                                 </button>
                             </div>
                         </div>`
