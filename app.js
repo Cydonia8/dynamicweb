@@ -211,10 +211,6 @@ function renderizar(lista_productos, contenedor_dom, crear_dom){
     })
 }
 
-function crearProductoCarrito(p){
-
-}
-
 function cerosFecha(fecha){
     if(fecha < 10){
         return `0${fecha}`
