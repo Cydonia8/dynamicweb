@@ -74,22 +74,6 @@ const productos = [
         category: 'Signature Guitars'
     },
     {
-        id: 'gp321984',
-        name: 'Steinway & Sons A-188 Makassar',
-        date: '17-07-2022',
-        price: 40890,
-        image: 'https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/bdb/547587/17448570_800.jpg',
-        category: 'Grand Pianos'
-    },
-    {
-        id: 'gp112385',
-        name: 'Steinway & Sons B-211',
-        date: '01-08-2022',
-        price: 53600,
-        image: 'https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/bdb/549646/17666053_800.jpg',
-        category: 'Grand Pianos'
-    },
-    {
         id: 'or148923',
         name: 'Hammond XK-5',
         date: '01-06-2012',

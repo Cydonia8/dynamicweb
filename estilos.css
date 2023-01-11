@@ -18,7 +18,7 @@ body{
 .container-productos.no-resultados{
     justify-content: center;
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
 }
 .seccion-productos-filtros{
     display: grid;
@@ -65,6 +65,9 @@ body{
     -webkit-box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
 -moz-box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
 box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
+}
+#noprod-foto{
+    width: 20%;
 }
 .producto div.foto-producto{
     position: relative;
@@ -130,12 +133,23 @@ box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
 }
 .vaciar-carrito{
     position: absolute;
-    bottom: 10%;
+    bottom: 15%;
+    background-color: rgb(204, 15, 15);
+    border: none;
+    width: 60%;
+    padding: 1rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.finalizar-compra{
     background-color: rgba(33, 130, 190, 0.896);
     border: none;
     width: 60%;
     padding: 1rem;
     font-size: 1.3rem;
+    position: absolute;
+    bottom: 5%;
+    font-weight: bold;
 }
 #cerrar-carrito{
     position: absolute;

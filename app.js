@@ -60,7 +60,8 @@ input_busqueda.addEventListener("keyup", ()=>{
 
     if(filtro.length===0){
         contenedor_productos.classList.add("no-resultados")
-        contenedor_productos.innerHTML="<h2>No hay productos que coincidan con la búsqueda</h2>"
+        contenedor_productos.innerHTML=`<h2>No hay productos con estas condiciones</h2>
+                                        <img id="noprod-foto" src="noprod.jpg">`
     }else{
         contenedor_productos.classList.remove("no-resultados")
         renderizar(filtro, contenedor_productos, crearProducto)
@@ -76,7 +77,8 @@ input_precio.addEventListener("change", ()=>{
 
     if(filtro.length===0){
         contenedor_productos.classList.add("no-resultados")
-        contenedor_productos.innerHTML="<h2>No hay productos que coincidan con la búsqueda</h2>"
+        contenedor_productos.innerHTML=`<h2>No hay productos con estas condiciones</h2>
+        <img id="noprod-foto" src="noprod.jpg">`
     }else{
         contenedor_productos.classList.remove("no-resultados")
         renderizar(filtro, contenedor_productos, crearProducto)
@@ -93,7 +95,8 @@ actualizar_fecha.addEventListener("click", ()=>{
 
     if(filtro.length === 0){
         contenedor_productos.classList.add("no-resultados")
-        contenedor_productos.innerHTML="<h2>No hay productos que coincidan con la búsqueda</h2>"
+        contenedor_productos.innerHTML=`<h2>No hay productos con estas condiciones</h2>
+        <img id="noprod-foto" src="noprod.jpg">`
     }else{
         contenedor_productos.classList.remove("no-resultados")
         renderizar(filtro, contenedor_productos, crearProducto)
