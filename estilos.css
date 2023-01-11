@@ -89,10 +89,12 @@ header form{
 }
 .seccion-productos-filtros.vertical{
     display: block;   
+    border: none;
 }
 .container-filtros.vertical{
     height: auto;
     z-index: 999;
+    border: none;
 }
 .filtros-sticky.vertical{
     flex-direction: row;
