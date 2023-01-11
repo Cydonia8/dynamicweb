@@ -7,12 +7,39 @@
         font-size: 2rem;
     }
 }
+@font-face {
+    font-family: 'DT';
+    src: url('Dreamsoftheatre-5Vja.ttf');
+}
 *,::after,::before{
     box-sizing: border-box;
 }
 body{
     margin: 0;
     font-family: 'Sofia Sans', sans-serif;
+}
+header img{
+    width: 10%;
+    margin-right: 2rem;
+}
+header{
+    font-family: 'DT';
+    font-size: 5rem;
+    display: flex;
+    padding: 0.5rem;
+    align-items: center;
+    background: rgb(197,197,209);
+    background: linear-gradient(90deg, rgba(197,197,209,1) 28%, rgba(33,130,190,0.87718837535014) 68%);
+    border-bottom: 2.5px solid black;
+    justify-content: space-between;
+}
+header div{
+    display: flex;
+    align-items: center;
+}
+header form{
+    font-family: 'Sofia Sans', sans-serif;
+    font-size: 1.5rem;
 }
 .container-productos{
     display: flex;
@@ -60,6 +87,19 @@ body{
     grid-template-columns: 0.3fr 1fr;
     gap: 10px;
 }
+.seccion-productos-filtros.vertical{
+    display: block;   
+}
+.container-filtros.vertical{
+    height: auto;
+    z-index: 999;
+}
+.filtros-sticky.vertical{
+    flex-direction: row;
+}
+.filtros-sticky ul.vertical{
+    display: flex;
+}
 .container-filtros{
     grid-row: 1;
     grid-column: 1;
@@ -93,6 +133,7 @@ body{
 }
 .filtros-sticky ul{
     padding: 0;
+    margin: 0;
 }
 .filtrar-precio{
     display: flex;
@@ -107,7 +148,7 @@ body{
 .filtros li{
     list-style: none;
     cursor: pointer;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     padding: 0.5rem;
 }
 .filtros li:hover{
@@ -125,6 +166,7 @@ body{
     -webkit-box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
 -moz-box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
 box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
+margin: auto;
 }
 #noprod-foto{
     width: 20%;
@@ -262,6 +304,9 @@ box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
     flex-direction: column;
     align-items: center;
     color: white;
+}
+.container-filtros.vertical.indexcero{
+    z-index: 500;
 }
 .contenido-modal h3,h4{
     margin: 0.6em;

@@ -23,12 +23,23 @@ const cerrar_modal = document.getElementById("cerrar-modal")
 //DOM para mostrar mensajes
 const contenedor_mensajes = document.querySelector(".contenedor-mensajes")
 
+//DOM para estilo vertical
+const modo_vertical = document.getElementById("vertical")
+const seccion_productos_filtros = document.querySelector(".seccion-productos-filtros")
+const container_filtros = document.querySelector(".container-filtros")
+const filtros_sticky = document.querySelector(".filtros-sticky")
+
+
+//Comprobación inicial con localStorage por si el carrito tiene elementos
 let recuento_carrito = JSON.parse(localStorage.getItem("carrito") ?? "[]")
+//Si los tiene, los imprimimos por pantalla
 renderizar(recuento_carrito, carrito, crearProductoCarrito)
-//Configuración inicial de la interfaz
+
 
 mostrar_carrito.addEventListener("click", ()=>{
     contenedor_carrito.classList.add("mostrar")
+    container_filtros.classList.add("indexcero")
+    
 })
 cerrar_carrito.addEventListener("click", ()=>{
     contenedor_carrito.classList.remove("mostrar")
@@ -36,6 +47,7 @@ cerrar_carrito.addEventListener("click", ()=>{
 cerrar_modal.addEventListener("click", ()=>{
     modal_productos.classList.remove("mostrar")
 })
+
 
 //Determinar el precio más alto para ajustar el rango del input
 const precio_mayor = productos.map(item => item.price).sort((a,b)=>b-a)[0]
@@ -107,7 +119,7 @@ actualizar_fecha.addEventListener("click", ()=>{
 
 })
 
-// renderizar(productos, contenedor_productos, crearProducto)
+
 InicializarTienda()
 
 function InicializarTienda(){
@@ -193,6 +205,23 @@ function crearProducto(p){
     }) 
     return producto
 }
+
+const filtros_sticky_ul = document.querySelector(".filtros > ul")
+
+modo_vertical.addEventListener("click", ()=>{
+    if(!seccion_productos_filtros.classList.contains("vertical")){
+        seccion_productos_filtros.classList.add("vertical")
+        container_filtros.classList.add("vertical")
+        filtros_sticky.classList.add("vertical")
+        filtros_sticky_ul.classList.add("vertical")
+    }else{
+        seccion_productos_filtros.classList.remove("vertical")
+        container_filtros.classList.remove("vertical")
+        filtros_sticky.classList.remove("vertical")
+        filtros_sticky_ul.classList.remove("vertical")
+    }
+    
+})
 
 function crearProductoCarrito(producto){
     const prod_carrito = document.createElement("div")
