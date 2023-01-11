@@ -40,7 +40,24 @@ header div{
 header form{
     font-family: 'Sofia Sans', sans-serif;
     font-size: 1.5rem;
+    display: flex;
+    align-items: center;
 }
+header form input{
+    appearance: none;
+    background-color: white;
+    height: 17px;
+    width: 50px;
+    border: 1.5px solid black;
+    transition: all .9s;
+    border-radius: 10px;
+    cursor: pointer;
+}
+header form input:checked{
+    background-color: rgb(34, 236, 20);
+    transition: .9s;
+}
+
 .container-productos{
     display: flex;
     flex-direction: column;
@@ -171,7 +188,7 @@ box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
 margin: auto;
 }
 #noprod-foto{
-    width: 20%;
+    width: 30%;
 }
 .producto div.foto-producto{
     width: 100%;
@@ -319,6 +336,8 @@ margin: auto;
     top: 30px;
     font-size: 2rem;
     cursor: pointer;
+    background-color: white;
+    border-radius: 60%;
 }
 .mostrar{
     opacity: 1;
