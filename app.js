@@ -20,6 +20,9 @@ const modal_productos = document.querySelector(".modal-productos")
 const contenido_modal = document.querySelector(".contenido-modal")
 const cerrar_modal = document.getElementById("cerrar-modal")
 
+//DOM para mostrar mensajes
+const contenedor_mensajes = document.querySelector(".contenedor-mensajes")
+
 let recuento_carrito = JSON.parse(localStorage.getItem("carrito") ?? "[]")
 renderizar(recuento_carrito, carrito, crearProductoCarrito)
 //Configuración inicial de la interfaz
@@ -149,7 +152,7 @@ function crearProducto(p){
                                 <p>${p.name}</p>
                                 <h3>${p.price}</h3>
                                 <h3>${p.category}</h3>
-                                <h4>${p.date}</h4>
+                                <h4>Disponible desde el ${p.date}</h4>
                             </div>`;
 
     const imagen = producto.querySelector(".foto-producto");
@@ -169,7 +172,8 @@ function crearProducto(p){
         const producto_buscado = productos.find(item => item.id === id);
         contenido_modal.innerHTML=`<img src="${producto_buscado.image}" alt="">
                                     <h3>${producto_buscado.name}</h3>
-                                    <h4>${producto_buscado.price}</h4>
+                                    <h3>${producto_buscado.price} €</h3>
+                                    <h4>ID del producto: ${producto_buscado.id}</h4>
                                     <button class="añadir-producto">Añadir al carrito</button>`;
 
         modal_productos.classList.add("mostrar")
@@ -183,6 +187,8 @@ function crearProducto(p){
             carrito.appendChild(producto_creado)
             recuento_carrito.push(producto_buscar)
             localStorage.setItem("carrito", JSON.stringify(recuento_carrito))
+
+            muestraMensaje("Producto añadido correctamente")
         })
     }) 
     return producto
@@ -238,4 +244,13 @@ function formatoFechaObjeto(fecha){
     fecha_nueva.setHours(0,0,0,0)
     
     return fecha_nueva.getTime()
+}
+
+function muestraMensaje(mensaje){
+    contenedor_mensajes.innerHTML=`<span>${mensaje}</span>`;
+    contenedor_mensajes.classList.add("mostrar-mensaje")
+    setTimeout(()=>{
+        contenedor_mensajes.innerHTML=""
+        contenedor_mensajes.classList.remove("mostrar-mensaje")
+    },2500)
 }
