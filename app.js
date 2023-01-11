@@ -149,9 +149,9 @@ function crearProducto(p){
                                 <i id="ampliar" class="fa-solid fa-eye"></i>
                             </div>
                             <div class="datos-producto">
-                                <p>${p.name}</p>
-                                <h3>${p.price}</h3>
-                                <h3>${p.category}</h3>
+                                <h2>${p.name}</h2>
+                                <h3>A la venta por ${p.price} €</h3>
+                                <h3>Producto de la categoría ${p.category}</h3>
                                 <h4>Disponible desde el ${p.date}</h4>
                             </div>`;
 

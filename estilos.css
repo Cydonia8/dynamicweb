@@ -188,6 +188,9 @@ box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
     align-items: center;
     font-family: 'Josefin Sans', sans-serif;
 }
+.carrito button{
+    cursor: pointer;
+}
 .carrito h3{
     font-size: 1.5rem;
 }
@@ -200,7 +203,6 @@ box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
     padding: 1rem;
     font-size: 1.3rem;
     font-weight: bold;
-    cursor: pointer;
 }
 .finalizar-compra{
     background-color: rgba(33, 130, 190, 0.896);
@@ -211,7 +213,6 @@ box-shadow: -4px 7px 21px -7px rgba(0,0,0,0.75);
     position: absolute;
     bottom: 5%;
     font-weight: bold;
-    cursor: pointer;
 }
 #cerrar-carrito{
     position: absolute;
