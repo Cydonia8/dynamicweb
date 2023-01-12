@@ -35,7 +35,7 @@ let recuento_carrito = JSON.parse(localStorage.getItem("carrito") ?? "[]")
 //Si los tiene, los imprimimos por pantalla
 renderizar(recuento_carrito, carrito, crearProductoCarrito)
 
-
+//Eventos para el carrito y modal
 mostrar_carrito.addEventListener("click", ()=>{
     contenedor_carrito.classList.add("mostrar")
     container_filtros.classList.add("indexcero")
@@ -122,6 +122,25 @@ actualizar_fecha.addEventListener("click", ()=>{
 
 InicializarTienda()
 
+const filtros_sticky_ul = document.querySelector(".filtros > ul")
+
+//Evento para colocar el menú de filtros en posición horizontal
+modo_vertical.addEventListener("click", ()=>{
+    if(!seccion_productos_filtros.classList.contains("vertical")){
+        seccion_productos_filtros.classList.add("vertical")
+        container_filtros.classList.add("vertical")
+        filtros_sticky.classList.add("vertical")
+        filtros_sticky_ul.classList.add("vertical")
+    }else{
+        seccion_productos_filtros.classList.remove("vertical")
+        container_filtros.classList.remove("vertical")
+        filtros_sticky.classList.remove("vertical")
+        filtros_sticky_ul.classList.remove("vertical")
+    }
+    
+})
+
+//Colocamos los elementos básicos de la tienda, productos y categorias para filtrar
 function InicializarTienda(){
     renderizar(productos, contenedor_productos, crearProducto)
 
@@ -152,6 +171,7 @@ function InicializarTienda(){
     })
 }
 
+//Funcion para crear el producto en el contenedor principal
 function crearProducto(p){
     const producto = document.createElement("article");
     producto.className="producto"
@@ -206,23 +226,8 @@ function crearProducto(p){
     return producto
 }
 
-const filtros_sticky_ul = document.querySelector(".filtros > ul")
 
-modo_vertical.addEventListener("click", ()=>{
-    if(!seccion_productos_filtros.classList.contains("vertical")){
-        seccion_productos_filtros.classList.add("vertical")
-        container_filtros.classList.add("vertical")
-        filtros_sticky.classList.add("vertical")
-        filtros_sticky_ul.classList.add("vertical")
-    }else{
-        seccion_productos_filtros.classList.remove("vertical")
-        container_filtros.classList.remove("vertical")
-        filtros_sticky.classList.remove("vertical")
-        filtros_sticky_ul.classList.remove("vertical")
-    }
-    
-})
-
+//Funcion que crea los productos en el carrito
 function crearProductoCarrito(producto){
     const prod_carrito = document.createElement("div")
     prod_carrito.classList.add("producto-carrito")
@@ -243,6 +248,7 @@ function crearProductoCarrito(producto){
     return prod_carrito;    
 }
 
+//Funcion que imprime los productos en un contenedor con una estructura determinada
 function renderizar(lista_productos, contenedor_dom, crear_dom){
     contenedor_dom.innerHTML="";
     lista_productos.forEach((item)=>{
@@ -251,6 +257,7 @@ function renderizar(lista_productos, contenedor_dom, crear_dom){
     })
 }
 
+//Funcion para agregar ceros al mes o dia si hace falta
 function cerosFecha(fecha){
     if(fecha < 10){
         return `0${fecha}`
@@ -259,6 +266,7 @@ function cerosFecha(fecha){
     }
 }
 
+//Funcion que transforma la fecha de los inputs a una marca de tiempo para poder compararse
 function formatoFecha(fecha){
     let array_fecha = fecha.split("-")
     let fecha_nueva = new Date(array_fecha[0], array_fecha[1]-1, array_fecha[2])
@@ -267,14 +275,16 @@ function formatoFecha(fecha){
     return fecha_nueva.getTime()
 }
 
+//Funcion que transforma la fecha de los objetos a una marca de tiempo para poder compararse
 function formatoFechaObjeto(fecha){
-    let array_fecha = fecha.split("-")
-    let fecha_nueva = new Date(array_fecha[2], array_fecha[1]-1, array_fecha[0])
+    let array_fecha = fecha.split("/")
+    let fecha_nueva = new Date(array_fecha[0], array_fecha[1]-1, array_fecha[2])
     fecha_nueva.setHours(0,0,0,0)
     
     return fecha_nueva.getTime()
 }
 
+//Funcion que muestra un mensaje por pantalla cada vez que se añade un producto al carrito
 function muestraMensaje(mensaje){
     contenedor_mensajes.innerHTML=`<span>${mensaje}</span>`;
     contenedor_mensajes.classList.add("mostrar-mensaje")
