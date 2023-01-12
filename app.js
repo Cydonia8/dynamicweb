@@ -184,7 +184,7 @@ function crearProducto(p){
                                 <h2>${p.name}</h2>
                                 <h3>A la venta por ${p.price} €</h3>
                                 <h3>Producto de la categoría ${p.category}</h3>
-                                <h4>Disponible desde el ${p.date}</h4>
+                                <h4>Disponible desde el ${adaptarFecha(p.date)}</h4>
                             </div>`;
 
     const imagen = producto.querySelector(".foto-producto");
@@ -264,6 +264,13 @@ function cerosFecha(fecha){
     }else{
         return fecha
     }
+}
+
+//Funcion para mostrar la fecha en formato español
+function adaptarFecha(fecha){
+    let array_fecha = fecha.split("/")
+    let fecha_nueva = new Date(array_fecha[0], array_fecha[1]-1, array_fecha[2])
+    return `${cerosFecha(fecha_nueva.getDate())}/${cerosFecha(fecha_nueva.getMonth()+1)}/${fecha_nueva.getFullYear()}`
 }
 
 //Funcion que transforma la fecha de los inputs a una marca de tiempo para poder compararse
