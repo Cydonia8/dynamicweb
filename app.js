@@ -34,7 +34,7 @@ const filtros_sticky = document.querySelector(".filtros-sticky")
 let recuento_carrito = JSON.parse(localStorage.getItem("carrito") ?? "[]")
 //Si los tiene, los imprimimos por pantalla
 renderizar(recuento_carrito, carrito, crearProductoCarrito)
-
+iniciarCarrito(recuento_carrito)
 //Eventos para el carrito y modal
 mostrar_carrito.addEventListener("click", ()=>{
     contenedor_carrito.classList.add("mostrar")
@@ -206,21 +206,40 @@ function crearProducto(p){
                                     <h3>${producto_buscado.name}</h3>
                                     <h3>${producto_buscado.price} €</h3>
                                     <h4>ID del producto: ${producto_buscado.id}</h4>
-                                    <button class="añadir-producto">Añadir al carrito</button>`;
+                                    <button class="añadir-producto">Añadir al carrito</button>
+                                    <input id="unidades-añadir" type="number" placeholder="Unidades a añadir" value="1">`;
 
         modal_productos.classList.add("mostrar")
         const añadir_carrito = contenido_modal.querySelector(".añadir-producto")
+        const unidades_añadir = contenido_modal.querySelector("#unidades-añadir")
 
         añadir_carrito.addEventListener("click", (evento)=>{
+            let unidades = unidades_añadir.value;
+            if(unidades <= 0){
+                unidades = 1
+            }
             const product_id = evento.target.parentElement.getAttribute("data-product")
             const producto_buscar = productos.find(item => item.id===product_id)
+            let prod = {...producto_buscar, cantidad:unidades}
+            
+            console.log(recuento_carrito)
+            console.log(producto_buscado)
+            console.log(prod)
+            if(!recuento_carrito.includes(producto_buscado)){     
+                recuento_carrito.push(prod)
+                localStorage.setItem("carrito", JSON.stringify(recuento_carrito))
+                
+                const unidades_prod = prod.cantidad
 
-            const producto_creado = crearProductoCarrito(producto_buscar)
-            carrito.appendChild(producto_creado)
-            recuento_carrito.push(producto_buscar)
-            localStorage.setItem("carrito", JSON.stringify(recuento_carrito))
+                const producto_creado = crearProductoCarrito(producto_buscar, unidades_prod)
+                carrito.appendChild(producto_creado)
+                
 
-            muestraMensaje("Producto añadido correctamente")
+                muestraMensaje("Producto añadido correctamente")
+            }else{
+                muestraMensaje("Este producto ya estaba añadido", "negativo")
+            }
+
         })
     }) 
     return producto
@@ -228,7 +247,7 @@ function crearProducto(p){
 
 
 //Funcion que crea los productos en el carrito
-function crearProductoCarrito(producto){
+function crearProductoCarrito(producto, unidades){
     const prod_carrito = document.createElement("div")
     prod_carrito.classList.add("producto-carrito")
     prod_carrito.setAttribute("data-product", producto.id)
@@ -238,7 +257,7 @@ function crearProductoCarrito(producto){
                             <span class="precio-producto">${producto.price} €</span>
                             <div class="botones-carrito">
                                 <button>
-                                    Cantidad <i class="fa-solid fa-plus"></i>
+                                    Cantidad ${unidades} <i class="fa-solid fa-plus"></i> <i class="fa-solid fa-minus"></i>
                                 </button>
                                 <button>
                                     Eliminar <i class="fa-solid fa-xmark"></i>
@@ -292,11 +311,17 @@ function formatoFechaObjeto(fecha){
 }
 
 //Funcion que muestra un mensaje por pantalla cada vez que se añade un producto al carrito
-function muestraMensaje(mensaje){
+function muestraMensaje(mensaje, resultado="success"){
     contenedor_mensajes.innerHTML=`<span>${mensaje}</span>`;
     contenedor_mensajes.classList.add("mostrar-mensaje")
+    contenedor_mensajes.classList.add(resultado)
     setTimeout(()=>{
         contenedor_mensajes.innerHTML=""
         contenedor_mensajes.classList.remove("mostrar-mensaje")
+        contenedor_mensajes.classList.remove(resultado)
     },2500)
+}
+
+function iniciarCarrito(recuento_carrito){
+    console.log(recuento_carrito)
 }

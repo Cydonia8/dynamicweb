@@ -93,6 +93,9 @@ header form input:checked{
     border-radius: 15px;
     font-family: inherit;
 }
+.contenedor-mensajes.negativo span{
+    color: red;
+}
 .container-productos.no-resultados{
     justify-content: center;
     align-items: center;
