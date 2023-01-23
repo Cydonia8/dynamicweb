@@ -15,6 +15,8 @@ const cerrar_carrito = document.getElementById("cerrar-carrito")
 const contenedor_carrito = document.querySelector(".contenedor-carrito")
 const carrito = document.querySelector(".contenedor-productos-carrito")
 const total_carrito = document.querySelector("#total-carrito")
+const vaciar_carrito = document.querySelector(".vaciar-carrito")
+const finalizar_compra = document.querySelector(".finalizar-compra")
 let total_precio = 0
 
 //DOM para el modal de los productos
@@ -284,6 +286,21 @@ function crearProductoCarrito(producto){
     // })
     return prod_carrito;    
 }
+vaciar_carrito.addEventListener("click", ()=>{
+    localStorage.clear()
+    carrito.innerHTML=""
+    total_carrito.innerText="Total: 0€"
+})
+finalizar_compra.addEventListener("click", ()=>{
+    if(recuento_carrito.length===0){
+        muestraMensaje("No has añadido nada al carrito", "negativo")
+    }else{
+        muestraMensaje("Enhorabuena por tu compra, máquina")
+        carrito.innerHTML=""
+        total_carrito.innerText="Total: 0€"
+        localStorage.clear()
+    }
+})
 //Funcion que imprime los productos en un contenedor con una estructura determinada
 function renderizar(lista_productos, contenedor_dom, crear_dom){
     contenedor_dom.innerHTML="";
