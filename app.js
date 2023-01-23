@@ -286,19 +286,13 @@ function crearProductoCarrito(producto){
     // })
     return prod_carrito;    
 }
-vaciar_carrito.addEventListener("click", ()=>{
-    localStorage.clear()
-    carrito.innerHTML=""
-    total_carrito.innerText="Total: 0€"
-})
+// vaciar_carrito.addEventListener("click", vaciarCarro(carrito))
 finalizar_compra.addEventListener("click", ()=>{
     if(recuento_carrito.length===0){
         muestraMensaje("No has añadido nada al carrito", "negativo")
     }else{
         muestraMensaje("Enhorabuena por tu compra, máquina")
-        carrito.innerHTML=""
-        total_carrito.innerText="Total: 0€"
-        localStorage.clear()
+        vaciarCarro()
     }
 })
 //Funcion que imprime los productos en un contenedor con una estructura determinada
@@ -308,6 +302,12 @@ function renderizar(lista_productos, contenedor_dom, crear_dom){
         const dom_prod = crear_dom(item)
         contenedor_dom.appendChild(dom_prod)
     })
+}
+
+function vaciarCarro(){
+    localStorage.clear()
+    carrito.innerHTML=""
+    total_carrito.innerText="Total: 0€"
 }
 console.log(total_precio)
 //Funcion para agregar ceros al mes o dia si hace falta
