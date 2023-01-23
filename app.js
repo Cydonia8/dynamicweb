@@ -306,10 +306,10 @@ function renderizar(lista_productos, contenedor_dom, crear_dom){
 
 function vaciarCarro(){
     localStorage.clear()
+    recuento_carrito.length=0
     carrito.innerHTML=""
     total_carrito.innerText="Total: 0€"
 }
-console.log(total_precio)
 //Funcion para agregar ceros al mes o dia si hace falta
 function cerosFecha(fecha){
     if(fecha < 10){
