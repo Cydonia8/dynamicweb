@@ -85,6 +85,13 @@ header form input:checked{
     visibility: visible;
     z-index: 1500;
 }
+.titulos-carrito{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+}
 .contenedor-mensajes span{
     font-size: 3.5rem;
     color: rgb(21, 143, 21);
@@ -260,7 +267,7 @@ margin: auto;
 }
 .vaciar-carrito{
     position: absolute;
-    bottom: 15%;
+    bottom: 12%;
     background-color: rgb(204, 15, 15);
     border: none;
     width: 60%;
@@ -275,13 +282,10 @@ margin: auto;
     padding: 1rem;
     font-size: 1.3rem;
     position: absolute;
-    bottom: 5%;
+    bottom: 4%;
     font-weight: bold;
 }
 #cerrar-carrito{
-    position: absolute;
-    left: 5%;
-    margin-top: 1rem;
     font-size: 1.5rem;
     background-color: rgba(33, 130, 190, 0.896);
     padding: 0.7rem;

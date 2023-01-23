@@ -14,6 +14,8 @@ const mostrar_carrito = document.getElementById("abrir-carrito")
 const cerrar_carrito = document.getElementById("cerrar-carrito")
 const contenedor_carrito = document.querySelector(".contenedor-carrito")
 const carrito = document.querySelector(".contenedor-productos-carrito")
+const total_carrito = document.querySelector("#total-carrito")
+let total_precio = 0
 
 //DOM para el modal de los productos
 const modal_productos = document.querySelector(".modal-productos")
@@ -259,17 +261,27 @@ function crearProductoCarrito(producto){
                                 </button>
                             </div>
                         </div>`
+    total_precio+=producto.cantidad * producto.price
+    total_precio = Number(total_precio.toFixed(2))
+    total_carrito.innerText=`Total: ${total_precio}€`
     const eliminar = prod_carrito.querySelector("#eliminar-producto")
     const aumentar_cantidad = prod_carrito.querySelector("#aumentar-cantidad")
     const reducir_cantidad = prod_carrito.querySelector("#reducir-cantidad")
     eliminar.addEventListener("click", ()=>{
+        total_precio-=producto.cantidad * producto.price      
+        total_precio = Number(total_precio.toFixed(2))
+        console.log(total_precio)
+        total_carrito.innerText=`Total: ${total_precio}€`
         carrito.removeChild(prod_carrito)
-        const carrito_actualizado = recuento_carrito.filter(item=>item.id!==producto.id)
-        localStorage.setItem("carrito", JSON.stringify(carrito_actualizado))
+        recuento_carrito = recuento_carrito.filter(item=>item.id!==producto.id)
+        localStorage.setItem("carrito", JSON.stringify(recuento_carrito))
     })
-    aumentar_cantidad.addEventListener("click", (evento)=>{
+    // aumentar_cantidad.addEventListener("click", (evento)=>{
         
-    })
+    // })
+    // reducir_cantidad.addEventListener("click", (evento)=>{
+
+    // })
     return prod_carrito;    
 }
 //Funcion que imprime los productos en un contenedor con una estructura determinada
@@ -280,7 +292,7 @@ function renderizar(lista_productos, contenedor_dom, crear_dom){
         contenedor_dom.appendChild(dom_prod)
     })
 }
-
+console.log(total_precio)
 //Funcion para agregar ceros al mes o dia si hace falta
 function cerosFecha(fecha){
     if(fecha < 10){
@@ -296,7 +308,6 @@ function adaptarFecha(fecha){
     let fecha_nueva = new Date(array_fecha[0], array_fecha[1]-1, array_fecha[2])
     return `${cerosFecha(fecha_nueva.getDate())}/${cerosFecha(fecha_nueva.getMonth()+1)}/${fecha_nueva.getFullYear()}`
 }
-
 //Funcion que transforma la fecha de los inputs a una marca de tiempo para poder compararse
 function formatoFecha(fecha){
     let array_fecha = fecha.split("-")
