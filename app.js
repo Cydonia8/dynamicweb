@@ -38,7 +38,7 @@ const filtros_sticky = document.querySelector(".filtros-sticky")
 let recuento_carrito = JSON.parse(localStorage.getItem("carrito") ?? "[]")
 //Si los tiene, los imprimimos por pantalla
 renderizar(recuento_carrito, carrito, crearProductoCarrito)
-iniciarCarrito(recuento_carrito)
+
 //Eventos para el carrito y modal
 mostrar_carrito.addEventListener("click", ()=>{
     contenedor_carrito.classList.add("mostrar")
