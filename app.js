@@ -286,7 +286,7 @@ function crearProductoCarrito(producto){
     // })
     return prod_carrito;    
 }
-// vaciar_carrito.addEventListener("click", vaciarCarro(carrito))
+vaciar_carrito.addEventListener("click", vaciarCarro)
 finalizar_compra.addEventListener("click", ()=>{
     if(recuento_carrito.length===0){
         muestraMensaje("No has añadido nada al carrito", "negativo")
