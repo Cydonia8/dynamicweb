@@ -224,22 +224,19 @@ function crearProducto(p){
             
             console.log(recuento_carrito)
             console.log(producto_buscado)
-            console.log(prod)
-            if(!recuento_carrito.includes(producto_buscado)){     
+            console.log(prod.id)
+            const repetido = recuento_carrito.filter(item=>item.id===prod.id)
+            if(repetido.length==0){     
                 recuento_carrito.push(prod)
                 localStorage.setItem("carrito", JSON.stringify(recuento_carrito))
-                
-                const unidades_prod = prod.cantidad
 
-                const producto_creado = crearProductoCarrito(producto_buscar, unidades_prod)
+                const producto_creado = crearProductoCarrito(prod)
                 carrito.appendChild(producto_creado)
-                
-
                 muestraMensaje("Producto añadido correctamente")
             }else{
                 muestraMensaje("Este producto ya estaba añadido", "negativo")
             }
-
+            console.log(recuento_carrito)
         })
     }) 
     return producto
@@ -247,7 +244,7 @@ function crearProducto(p){
 
 
 //Funcion que crea los productos en el carrito
-function crearProductoCarrito(producto, unidades){
+function crearProductoCarrito(producto){
     const prod_carrito = document.createElement("div")
     prod_carrito.classList.add("producto-carrito")
     prod_carrito.setAttribute("data-product", producto.id)
@@ -256,17 +253,25 @@ function crearProductoCarrito(producto, unidades){
                             <span class="nombre-producto">${producto.name}</span>
                             <span class="precio-producto">${producto.price} €</span>
                             <div class="botones-carrito">
-                                <button>
-                                    Cantidad ${unidades} <i class="fa-solid fa-plus"></i> <i class="fa-solid fa-minus"></i>
-                                </button>
-                                <button>
+                                    <span>Cantidad ${producto.cantidad}</span> <i id="aumentar-cantidad" class="fa-solid fa-plus"></i> <i id="reducir-cantidad" class="fa-solid fa-minus"></i>
+                                <button id="eliminar-producto">
                                     Eliminar <i class="fa-solid fa-xmark"></i>
                                 </button>
                             </div>
                         </div>`
+    const eliminar = prod_carrito.querySelector("#eliminar-producto")
+    const aumentar_cantidad = prod_carrito.querySelector("#aumentar-cantidad")
+    const reducir_cantidad = prod_carrito.querySelector("#reducir-cantidad")
+    eliminar.addEventListener("click", ()=>{
+        carrito.removeChild(prod_carrito)
+        const carrito_actualizado = recuento_carrito.filter(item=>item.id!==producto.id)
+        localStorage.setItem("carrito", JSON.stringify(carrito_actualizado))
+    })
+    aumentar_cantidad.addEventListener("click", (evento)=>{
+        
+    })
     return prod_carrito;    
 }
-
 //Funcion que imprime los productos en un contenedor con una estructura determinada
 function renderizar(lista_productos, contenedor_dom, crear_dom){
     contenedor_dom.innerHTML="";
