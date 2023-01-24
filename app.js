@@ -224,17 +224,17 @@ function crearProducto(p){
             }
             const product_id = evento.target.parentElement.getAttribute("data-product")
             const producto_buscar = productos.find(item => item.id===product_id)
-            let prod = {...producto_buscar, cantidad:unidades}
+            let prod_campo_cantidad = {...producto_buscar, cantidad:unidades}
             
             console.log(recuento_carrito)
             console.log(producto_buscado)
-            console.log(prod.id)
-            const repetido = recuento_carrito.filter(item=>item.id===prod.id)
+            console.log(prod_campo_cantidad.id)
+            const repetido = recuento_carrito.filter(item=>item.id===prod_campo_cantidad.id)
             if(repetido.length==0){     
-                recuento_carrito.push(prod)
+                recuento_carrito.push(prod_campo_cantidad)
                 localStorage.setItem("carrito", JSON.stringify(recuento_carrito))
 
-                const producto_creado = crearProductoCarrito(prod)
+                const producto_creado = crearProductoCarrito(prod_campo_cantidad)
                 carrito.appendChild(producto_creado)
                 muestraMensaje("Producto añadido correctamente")
             }else{
@@ -257,7 +257,7 @@ function crearProductoCarrito(producto){
                             <span class="nombre-producto">${producto.name}</span>
                             <span class="precio-producto">${producto.price} €</span>
                             <div class="botones-carrito">
-                                    <span>Cantidad ${producto.cantidad}</span> <i id="aumentar-cantidad" class="fa-solid fa-plus"></i> <i id="reducir-cantidad" class="fa-solid fa-minus"></i>
+                                    <span>Cantidad</span><span>${producto.cantidad}</span> <i id="aumentar-cantidad" class="fa-solid fa-plus"></i> <i id="reducir-cantidad" class="fa-solid fa-minus"></i>
                                 <button id="eliminar-producto">
                                     Eliminar <i class="fa-solid fa-xmark"></i>
                                 </button>
@@ -278,12 +278,17 @@ function crearProductoCarrito(producto){
         recuento_carrito = recuento_carrito.filter(item=>item.id!==producto.id)
         localStorage.setItem("carrito", JSON.stringify(recuento_carrito))
     })
-    // aumentar_cantidad.addEventListener("click", (evento)=>{
-        
-    // })
-    // reducir_cantidad.addEventListener("click", (evento)=>{
-
-    // })
+    aumentar_cantidad.addEventListener("click", (evento)=>{
+        producto["cantidad"]++
+        // let num = evento.currentTarget.previousElementSibling.innerText
+        evento.currentTarget.previousElementSibling.innerText=producto["cantidad"]
+        console.log(producto["cantidad"])
+    })
+    reducir_cantidad.addEventListener("click", (evento)=>{
+        producto["cantidad"]--
+        // let num = evento.currentTarget.previousElementSibling.innerText
+        evento.currentTarget.previousElementSibling.previousElementSibling.innerText=producto["cantidad"]
+    })
     return prod_carrito;    
 }
 vaciar_carrito.addEventListener("click", vaciarCarro)

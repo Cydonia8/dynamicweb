@@ -57,7 +57,9 @@ header form input:checked{
     background-color: rgb(34, 236, 20);
     transition: .9s;
 }
-
+.botones-carrito i{
+    cursor: pointer;
+}
 .container-productos{
     display: flex;
     flex-direction: column;
