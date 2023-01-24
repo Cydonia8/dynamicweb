@@ -224,9 +224,7 @@ margin: auto;
     cursor: pointer;
 }
 .producto div.foto-producto i:hover{
-    animation-name: efectoAumentado;
-    animation-fill-mode: backwards;
-    animation-duration: 1s;
+    transform: scale(1.2);
 }
 .producto div.datos-producto{
     display: flex;
@@ -250,7 +248,7 @@ margin: auto;
 .carrito{
     position: fixed;
     height: 100vh;
-    width: 40vh;
+    width: 50vh;
     background-color: whitesmoke;
     top: 0;
     right: 0;
@@ -266,6 +264,9 @@ margin: auto;
 }
 .carrito h3{
     font-size: 1.5rem;
+}
+.cantidad-prod{
+    font-weight: bold;
 }
 .vaciar-carrito{
     position: absolute;

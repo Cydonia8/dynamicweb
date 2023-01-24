@@ -257,7 +257,7 @@ function crearProductoCarrito(producto){
                             <span class="nombre-producto">${producto.name}</span>
                             <span class="precio-producto">${producto.price} €</span>
                             <div class="botones-carrito">
-                                    <span>Cantidad</span><span>${producto.cantidad}</span> <i id="aumentar-cantidad" class="fa-solid fa-plus"></i> <i id="reducir-cantidad" class="fa-solid fa-minus"></i>
+                                    <div><span>Cantidad: </span><span class=\"cantidad-prod\">${producto.cantidad}</span></div> <i id="aumentar-cantidad" class="fa-solid fa-plus"></i> <i id="reducir-cantidad" class="fa-solid fa-minus"></i>
                                 <button id="eliminar-producto">
                                     Eliminar <i class="fa-solid fa-xmark"></i>
                                 </button>
@@ -271,23 +271,32 @@ function crearProductoCarrito(producto){
     const reducir_cantidad = prod_carrito.querySelector("#reducir-cantidad")
     eliminar.addEventListener("click", ()=>{
         total_precio-=producto.cantidad * producto.price      
-        total_precio = Number(total_precio.toFixed(2))
-        console.log(total_precio)
-        total_carrito.innerText=`Total: ${total_precio}€`
+        actualizarPrecio(total_precio)
         carrito.removeChild(prod_carrito)
         recuento_carrito = recuento_carrito.filter(item=>item.id!==producto.id)
         localStorage.setItem("carrito", JSON.stringify(recuento_carrito))
     })
     aumentar_cantidad.addEventListener("click", (evento)=>{
         producto["cantidad"]++
-        // let num = evento.currentTarget.previousElementSibling.innerText
-        evento.currentTarget.previousElementSibling.innerText=producto["cantidad"]
+        evento.currentTarget.previousElementSibling.children[1].innerText=producto["cantidad"]
         console.log(producto["cantidad"])
+        total_precio+=producto["price"]
+        actualizarPrecio(total_precio)
+        actualizarLista(recuento_carrito, producto)
     })
     reducir_cantidad.addEventListener("click", (evento)=>{
         producto["cantidad"]--
+        total_precio-=producto["price"]
+        actualizarPrecio(total_precio)
         // let num = evento.currentTarget.previousElementSibling.innerText
-        evento.currentTarget.previousElementSibling.previousElementSibling.innerText=producto["cantidad"]
+        if(producto["cantidad"] != 0){
+            evento.currentTarget.previousElementSibling.previousElementSibling.children[1].innerText=producto["cantidad"]
+            actualizarLista(recuento_carrito, producto)
+        }else{
+            eliminarProductoLista(recuento_carrito, producto)
+            carrito.remove(prod_carrito)
+        }
+        
     })
     return prod_carrito;    
 }
@@ -362,4 +371,19 @@ function muestraMensaje(mensaje, resultado="success"){
 
 function iniciarCarrito(recuento_carrito){
     console.log(recuento_carrito)
+}
+
+function actualizarPrecio(precio){
+    precio=Number(precio.toFixed(2))
+    total_carrito.innerText=`Total: ${precio}€`
+}
+
+function actualizarLista(lista, producto){
+    let indice = lista.findIndex(item=>item.id===producto.id)
+    lista.splice(indice,1, producto)
+    localStorage.setItem("carrito", JSON.stringify(lista))
+}
+function eliminarProductoLista(lista, producto){
+    let lista_actualizada = lista.filter(item => item.id !== producto.id)
+    localStorage.setItem("carrito", JSON.stringify(lista_actualizada))
 }
