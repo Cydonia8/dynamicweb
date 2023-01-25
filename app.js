@@ -210,8 +210,10 @@ function crearProducto(p){
                                     <h3>${producto_buscado.name}</h3>
                                     <h3>${producto_buscado.price} €</h3>
                                     <h4>ID del producto: ${producto_buscado.id}</h4>
-                                    <button class="añadir-producto">Añadir al carrito</button>
-                                    <input id="unidades-añadir" type="number" placeholder="Unidades a añadir" value="1">`;
+                                    <div>
+                                        <button class="añadir-producto">Añadir al carrito</button>
+                                        <input id="unidades-añadir" type="number" value="1" min="1">
+                                    </div>`;
 
         modal_productos.classList.add("mostrar")
         const añadir_carrito = contenido_modal.querySelector(".añadir-producto")
@@ -219,16 +221,17 @@ function crearProducto(p){
 
         añadir_carrito.addEventListener("click", (evento)=>{
             let unidades = unidades_añadir.value;
+            //Si se introducen unidades negativas o cero, automáticamente se introducirá únicamente una
             if(unidades <= 0){
                 unidades = 1
             }
-            const product_id = evento.target.parentElement.getAttribute("data-product")
+            const product_id = evento.target.parentElement.parentElement.getAttribute("data-product")
             const producto_buscar = productos.find(item => item.id===product_id)
+            //Copia del producto con campo extra cantidad, en el que guardaremos las unidades añadidas
             let prod_campo_cantidad = {...producto_buscar, cantidad:unidades}
             
-            console.log(recuento_carrito)
-            console.log(producto_buscado)
-            console.log(prod_campo_cantidad.id)
+            //Mediante el filter comprobamos si en el array recuento_carrito había ya algún producto con el id del que se intenta añadir al carrito
+            //Si no lo hay, lo añadimos. Si lo hay, significa que es un producto repetido y no lo permitimos
             const repetido = recuento_carrito.filter(item=>item.id===prod_campo_cantidad.id)
             if(repetido.length==0){     
                 recuento_carrito.push(prod_campo_cantidad)
@@ -240,7 +243,6 @@ function crearProducto(p){
             }else{
                 muestraMensaje("Este producto ya estaba añadido", "negativo")
             }
-            console.log(recuento_carrito)
         })
     }) 
     return producto
@@ -264,17 +266,17 @@ function crearProductoCarrito(producto){
                             </div>
                         </div>`
     total_precio+=producto.cantidad * producto.price
-    total_precio = Number(total_precio.toFixed(2))
-    total_carrito.innerText=`Total: ${total_precio}€`
+    actualizarPrecio(total_precio)
+
     const eliminar = prod_carrito.querySelector("#eliminar-producto")
     const aumentar_cantidad = prod_carrito.querySelector("#aumentar-cantidad")
     const reducir_cantidad = prod_carrito.querySelector("#reducir-cantidad")
+
     eliminar.addEventListener("click", ()=>{
         total_precio-=producto.cantidad * producto.price      
         actualizarPrecio(total_precio)
         carrito.removeChild(prod_carrito)
-        recuento_carrito = recuento_carrito.filter(item=>item.id!==producto.id)
-        localStorage.setItem("carrito", JSON.stringify(recuento_carrito))
+        eliminarProductoLista(recuento_carrito, producto)
     })
     aumentar_cantidad.addEventListener("click", (evento)=>{
         producto["cantidad"]++
@@ -288,25 +290,28 @@ function crearProductoCarrito(producto){
         producto["cantidad"]--
         total_precio-=producto["price"]
         actualizarPrecio(total_precio)
-        // let num = evento.currentTarget.previousElementSibling.innerText
         if(producto["cantidad"] != 0){
             evento.currentTarget.previousElementSibling.previousElementSibling.children[1].innerText=producto["cantidad"]
             actualizarLista(recuento_carrito, producto)
         }else{
             eliminarProductoLista(recuento_carrito, producto)
-            carrito.remove(prod_carrito)
+            carrito.removeChild(prod_carrito)
         }
         
     })
     return prod_carrito;    
 }
-vaciar_carrito.addEventListener("click", vaciarCarro)
+vaciar_carrito.addEventListener("click", ()=>{
+    total_precio=0
+    vaciarCarro(total_precio)
+})
 finalizar_compra.addEventListener("click", ()=>{
     if(recuento_carrito.length===0){
         muestraMensaje("No has añadido nada al carrito", "negativo")
     }else{
         muestraMensaje("Enhorabuena por tu compra, máquina")
-        vaciarCarro()
+        vaciarCarro(total_precio)
+        total_precio=0
     }
 })
 //Funcion que imprime los productos en un contenedor con una estructura determinada
@@ -318,11 +323,13 @@ function renderizar(lista_productos, contenedor_dom, crear_dom){
     })
 }
 
-function vaciarCarro(){
+//Funcion que vacia el local storage y el DOM que contiene los articulos añadidos
+function vaciarCarro(precio){
+    precio = 0
     localStorage.clear()
     recuento_carrito.length=0
     carrito.innerHTML=""
-    total_carrito.innerText="Total: 0€"
+    total_carrito.innerText=`Total: ${precio}€`
 }
 //Funcion para agregar ceros al mes o dia si hace falta
 function cerosFecha(fecha){
@@ -369,20 +376,19 @@ function muestraMensaje(mensaje, resultado="success"){
     },2500)
 }
 
-function iniciarCarrito(recuento_carrito){
-    console.log(recuento_carrito)
-}
-
+//Funcion que, a partir de un precio, lo actualiza en el contenedor correspondiente
 function actualizarPrecio(precio){
     precio=Number(precio.toFixed(2))
     total_carrito.innerText=`Total: ${precio}€`
 }
 
+//Funcion que actualiza la lista del carrito para cuando se añadan o resten unidades a un producto, así como en el local storage
 function actualizarLista(lista, producto){
     let indice = lista.findIndex(item=>item.id===producto.id)
     lista.splice(indice,1, producto)
     localStorage.setItem("carrito", JSON.stringify(lista))
 }
+//Funcion que elimina un producto de la lista y del local storage si la cantidad llega a 0
 function eliminarProductoLista(lista, producto){
     let lista_actualizada = lista.filter(item => item.id !== producto.id)
     localStorage.setItem("carrito", JSON.stringify(lista_actualizada))

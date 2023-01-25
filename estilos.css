@@ -83,6 +83,17 @@ header form input:checked{
     left: 0;
     visibility: hidden;
 }
+.contenido-modal div{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+.contenido-modal div input{
+    padding: 1rem;
+    border: none;
+    font-weight: bold;
+    background-color: #f3f3f39c;
+}
 .contenedor-mensajes.mostrar-mensaje{
     visibility: visible;
     z-index: 1500;
@@ -324,7 +335,6 @@ margin: auto;
     padding: 0.5rem;
     font-family: inherit;
     font-size: 1.5rem;
-    margin-top: 1.5rem;
     cursor: pointer;
 }
 .contenido-modal{
