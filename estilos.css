@@ -112,6 +112,7 @@ header form input:checked{
     background-color: whitesmoke;
     border-radius: 15px;
     font-family: inherit;
+    text-align: center;
 }
 .contenedor-mensajes.negativo span{
     color: red;

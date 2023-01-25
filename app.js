@@ -309,7 +309,7 @@ finalizar_compra.addEventListener("click", ()=>{
     if(recuento_carrito.length===0){
         muestraMensaje("No has añadido nada al carrito", "negativo")
     }else{
-        muestraMensaje("Enhorabuena por tu compra, máquina")
+        muestraMensaje("Enhorabuena por tu compra, máquina. En dos días te llegará un macuto lleno de tazos, por espabilao")
         vaciarCarro(total_precio)
         total_precio=0
     }
