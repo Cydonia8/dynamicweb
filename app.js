@@ -1,5 +1,5 @@
 "use strict"
-
+console.log(productos.length)
 //DOM para los filtros y muestra de los productos
 const contenedor_productos = document.querySelector(".container-productos");
 const contenedor_filtros = document.querySelector(".filtros")

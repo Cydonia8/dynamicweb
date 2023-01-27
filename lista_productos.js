@@ -74,6 +74,54 @@ const productos = [
         category: 'Signature Guitars'
     },
     {
+        id: 'gs938175',
+        name: 'Gibson Custom EDS 1275 CH',
+        date: '2007/05/12',
+        price: 6699,
+        image: 'https://thumbs.static-thomann.de/thumb/thumb220x220/pics/prod/348464.webp',
+        category: 'Signature Guitars'
+    },
+    {
+        id: 'gs198765',
+        name: 'Gibson Les Paul Standard 50s',
+        date: '2008/08/12',
+        price: 2390,
+        image: 'https://thumbs.static-thomann.de/thumb/thumb220x220/pics/prod/462505.webp',
+        category: 'Signature Guitars'
+    },
+    {
+        id: 'am445389',
+        name: 'VOX AC30 C2',
+        date: '2005/07/21',
+        price: 1099,
+        image: 'https://thumbs.static-thomann.de/thumb/thumb220x220/pics/prod/180600.webp',
+        category: 'Guitar Amplifiers'
+    },
+    {
+        id: 'am129983',
+        name: 'Marshall 1959 HW',
+        date: '2010/03/20',
+        price: 1969,
+        image: 'https://thumbs.static-thomann.de/thumb/thumb220x220/pics/prod/177417.webp',
+        category: 'Guitar Amplifiers'
+    },
+    {
+        id: 'am276489',
+        name: 'Fender Blues Deluxe Reissue',
+        date: '2003/10/14',
+        price: 1111,
+        image: 'https://thumbs.static-thomann.de/thumb/thumb220x220/pics/prod/180643.webp',
+        category: 'Guitar Amplifiers'
+    },
+    {
+        id: 'am945287',
+        name: 'Mesa Boogie Mark Five Head',
+        date: '2009/11/19',
+        price: 2777,
+        image: 'https://thumbs.static-thomann.de/thumb/thumb220x220/pics/prod/224041.webp',
+        category: 'Guitar Amplifiers'
+    },
+    {
         id: 'or148923',
         name: 'Hammond XK-5',
         date: '2012/06/01',
@@ -88,6 +136,22 @@ const productos = [
         price: 3666,
         image: 'https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/bdb/536652/17548100_800.jpg',
         category: 'Organs'
+    },
+    {
+        id: 'ms198274',
+        name: 'The Beatles Complete Scores',
+        date: '2001/04/20',
+        price: 92,
+        image: 'https://thumbs.static-thomann.de/thumb/thumb220x220/pics/prod/384526.webp',
+        category: 'Sheet Music'
+    },
+    {
+        id: 'ms598254',
+        name: 'Atlantic Music Charlie Parker Omnibook',
+        date: '2011/01/01',
+        price: 32,
+        image: 'https://thumbs.static-thomann.de/thumb/thumb220x220/pics/prod/220679.webp',
+        category: 'Sheet Music'
     },
     {
         id: 'mn121789',
