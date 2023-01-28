@@ -1,5 +1,4 @@
 "use strict"
-console.log(productos.length)
 //DOM para los filtros y muestra de los productos
 const contenedor_productos = document.querySelector(".container-productos");
 const contenedor_filtros = document.querySelector(".filtros")
@@ -33,6 +32,7 @@ const seccion_productos_filtros = document.querySelector(".seccion-productos-fil
 const container_filtros = document.querySelector(".container-filtros")
 const filtros_sticky = document.querySelector(".filtros-sticky")
 
+let lista = []
 
 //Comprobación inicial con localStorage por si el carrito tiene elementos
 let recuento_carrito = JSON.parse(localStorage.getItem("carrito") ?? "[]")
@@ -53,9 +53,6 @@ cerrar_modal.addEventListener("click", ()=>{
 })
 
 
-//Determinar el precio más alto para ajustar el rango del input
-const precio_mayor = productos.map(item => item.price).sort((a,b)=>b-a)[0]
-input_precio.setAttribute("max", precio_mayor)
 
 //Sacar fecha actual para el filtro de fechas
 const momento_actual = new Date()
@@ -72,9 +69,9 @@ input_busqueda.addEventListener("keyup", ()=>{
     let filtro;
 
     if(buscar===""){
-        filtro = [...productos]
+        filtro = [...lista]
     }else{
-        filtro = productos.filter(item => item.name.toLowerCase().includes(buscar))
+        filtro = lista.filter(item => item.name.toLowerCase().includes(buscar))
     }
 
     if(filtro.length===0){
@@ -86,31 +83,14 @@ input_busqueda.addEventListener("keyup", ()=>{
         renderizar(filtro, contenedor_productos, crearProducto)
     }
 })
-//Filtrar productos por precio
-input_precio.addEventListener("change", ()=>{
-    let valor = input_precio.value
-    let filtro;
 
-    input_precio.nextElementSibling.innerText=`Filtro máximo de ${valor} €`
-    filtro = productos.filter(item => item.price <= valor)
-
-    if(filtro.length===0){
-        contenedor_productos.classList.add("no-resultados")
-        contenedor_productos.innerHTML=`<h2>No hay productos con estas condiciones</h2>
-        <img id="noprod-foto" src="noprod.jpg">`
-    }else{
-        contenedor_productos.classList.remove("no-resultados")
-        renderizar(filtro, contenedor_productos, crearProducto)
-    }
-
-})
 
 //Filtrar por fecha
 actualizar_fecha.addEventListener("click", ()=>{
     const fecha_inicial = formatoFecha(fecha_inicio.value)
     const fecha_final = formatoFecha(fecha_tope.value)
 
-    let filtro = productos.filter(item => formatoFechaObjeto(item.date) >= fecha_inicial && formatoFechaObjeto(item.date) <= fecha_final )
+    let filtro = lista.filter(item => formatoFechaObjeto(item.date) >= fecha_inicial && formatoFechaObjeto(item.date) <= fecha_final )
 
     if(filtro.length === 0){
         contenedor_productos.classList.add("no-resultados")
@@ -122,7 +102,25 @@ actualizar_fecha.addEventListener("click", ()=>{
     }
 
 })
+//Filtrar productos por precio
+input_precio.addEventListener("change", ()=>{
+    let valor = input_precio.value
+    let filtro;
 
+    input_precio.nextElementSibling.innerText=`Filtro máximo de ${valor} €`
+    filtro = lista.filter(item => parseFloat(item.price) < valor)
+    console.log(filtro)
+
+    if(filtro.length===0){
+        contenedor_productos.classList.add("no-resultados")
+        contenedor_productos.innerHTML=`<h2>No hay productos con estas condiciones</h2>
+        <img id="noprod-foto" src="noprod.jpg">`
+    }else{
+        contenedor_productos.classList.remove("no-resultados")
+        renderizar(filtro, contenedor_productos, crearProducto)
+    }
+
+})
 
 InicializarTienda()
 
@@ -145,12 +143,21 @@ modo_vertical.addEventListener("click", ()=>{
 })
 
 //Colocamos los elementos básicos de la tienda, productos y categorias para filtrar
-function InicializarTienda(){
-    renderizar(productos, contenedor_productos, crearProducto)
+async function InicializarTienda(url = "listaProductos.php"){
+    const respuesta = await fetch(url)
+    const datos = await respuesta.json();
+    lista = datos["datos"];
+
+    renderizar(lista, contenedor_productos, crearProducto)
 
     //Array con categorías sin repetir
-    const categorias_no_rep = productos.map(item => item.category).filter((c,i,array)=>array.indexOf(c)===i)
+    const categorias_no_rep = lista.map(item => item.category).filter((c,i,array)=>array.indexOf(c)===i)
     const lista_categorias = document.createElement("ul");
+
+    //Determinar el precio más alto para ajustar el rango del input
+    const precio_mayor = lista.map(item => item.price).sort((a,b)=>b-a)[0]
+    input_precio.setAttribute("max", precio_mayor)
+
 
     contenedor_filtros.appendChild(lista_categorias);
     lista_categorias.innerHTML=`<li class="categoria">Todos</li>`
@@ -166,9 +173,9 @@ function InicializarTienda(){
             contenedor_productos.classList.remove("no-resultados")
             
             if(pulsado.innerText==="Todos"){
-                filtro = [...productos]
+                filtro = [...lista]
             }else{
-                filtro = productos.filter(item => item.category===pulsado.innerText)
+                filtro = lista.filter(item => item.category===pulsado.innerText)
             }
             renderizar(filtro, contenedor_productos, crearProducto)
         }
@@ -342,7 +349,7 @@ function cerosFecha(fecha){
 
 //Funcion para mostrar la fecha en formato español
 function adaptarFecha(fecha){
-    let array_fecha = fecha.split("/")
+    let array_fecha = fecha.split("-")
     let fecha_nueva = new Date(array_fecha[0], array_fecha[1]-1, array_fecha[2])
     return `${cerosFecha(fecha_nueva.getDate())}/${cerosFecha(fecha_nueva.getMonth()+1)}/${fecha_nueva.getFullYear()}`
 }
@@ -357,7 +364,7 @@ function formatoFecha(fecha){
 
 //Funcion que transforma la fecha de los objetos a una marca de tiempo para poder compararse
 function formatoFechaObjeto(fecha){
-    let array_fecha = fecha.split("/")
+    let array_fecha = fecha.split("-")
     let fecha_nueva = new Date(array_fecha[0], array_fecha[1]-1, array_fecha[2])
     fecha_nueva.setHours(0,0,0,0)
     
