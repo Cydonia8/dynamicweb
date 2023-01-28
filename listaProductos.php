@@ -1,6 +1,5 @@
 <?php
     require_once "config.php";
-    time();
     //Cabeceras
 	header('Content-Type: application/json');
 	header("Access-Control-Allow-Origin: *");
@@ -12,13 +11,13 @@
     $fila = $consulta_total->fetch_array(MYSQLI_ASSOC);
     $total = $fila['total'];
 
-    $limite_default = 4;
+    $limite_default = 3;
     // $consulta = $conexion->query("select * from $tablename");
     // while($fila = $consulta->fetch_array(MYSQLI_ASSOC)){
     //     $datos[] =
     // }
-    $offset = $_GET['offset'] ?? 0;
-    $limite = $_GET['limite'] ?? $limite_default;
+    $offset = $_REQUEST['offset'] ?? 0;
+    $limite = $_REQUEST['limite'] ?? $limite_default;
     $datos = [];
     
     $sentencia = $conexion->query("select * from $tablename limit $offset, $limite");
@@ -29,7 +28,7 @@
     $info['total'] = $total;
     $info['datos'] = $datos;
     
-    $patron_url = explode("?", $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+    $patron_url = explode("?", $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'])[0];
     // echo "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     
     //Determinamos el siguiente enlace
@@ -42,7 +41,7 @@
         }else{
             $nuevo_limite = $total -$offset_siguiente;
         }
-        $info["next"] = $patron_url[0]."?offset=$offset_siguiente&limite=$nuevo_limite";
+        $info["next"] = $patron_url."?offset=$offset_siguiente&limite=$nuevo_limite";
     }else{
         $info["next"] = "null";
     }
@@ -59,7 +58,7 @@
             $nuevo_limite = $offset;
             $offset_previo = 0;
         }
-        $info["previous"] = $patron_url[0]."?offset=$offset_previo&limite=$nuevo_limite";
+        $info["previous"] = $patron_url."?offset=$offset_previo&limite=$nuevo_limite";
     }else{
         $info["previous"] = "null";
     }

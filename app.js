@@ -8,6 +8,10 @@ const fecha_inicio = document.getElementById("fecha-inicio")
 const fecha_tope = document.getElementById("fecha-tope")
 const actualizar_fecha = document.getElementById("actualizar-fecha")
 
+//DOM relacionado con el paginador
+const anterior = document.querySelector("#anterior")
+const siguiente = document.querySelector("#siguiente")
+
 //DOM relacionado con el carrito
 const mostrar_carrito = document.getElementById("abrir-carrito")
 const cerrar_carrito = document.getElementById("cerrar-carrito")
@@ -51,6 +55,14 @@ cerrar_carrito.addEventListener("click", ()=>{
 cerrar_modal.addEventListener("click", ()=>{
     modal_productos.classList.remove("mostrar")
 })
+
+siguiente.addEventListener("click", cambiarPagina);
+anterior.addEventListener("click", cambiarPagina);
+
+function cambiarPagina(eventos){
+    let url = eventos.target.getAttribute("data-link")
+    InicializarTienda(url)
+}
 
 
 
@@ -123,7 +135,7 @@ input_precio.addEventListener("change", ()=>{
 })
 
 InicializarTienda()
-
+console.log(siguiente.getAttribute("data-link"))
 const filtros_sticky_ul = document.querySelector(".filtros > ul")
 
 //Evento para colocar el menú de filtros en posición horizontal
@@ -147,23 +159,43 @@ async function InicializarTienda(url = "listaProductos.php"){
     const respuesta = await fetch(url)
     const datos = await respuesta.json();
     lista = datos["datos"];
+    console.log(datos)
 
-    renderizar(lista, contenedor_productos, crearProducto)
+    if(datos["next"] == "null"){
+        siguiente.style.display="none"
+    }else{
+        siguiente.setAttribute("data-link", `http://${datos["next"]}`)
+        siguiente.style.display="inline"
+        
+    }
+
+    if(datos["previous"] == "null"){
+        anterior.style.display="none"
+    }else{
+        anterior.setAttribute("data-link", `http://${datos["previous"]}`)
+        anterior.style.display="inline"
+    }
 
     //Array con categorías sin repetir
     const categorias_no_rep = lista.map(item => item.category).filter((c,i,array)=>array.indexOf(c)===i)
     const lista_categorias = document.createElement("ul");
+    contenedor_filtros.innerHTML=""
+    contenedor_filtros.appendChild(lista_categorias);
+    lista_categorias.innerHTML=`<li class="categoria">Todos</li>`
+    categorias_no_rep.forEach(cate => {
+        lista_categorias.innerHTML+=`<li class="categoria">${cate}</li>`
+    })
+
+    renderizar(lista, contenedor_productos, crearProducto)
+
+
 
     //Determinar el precio más alto para ajustar el rango del input
     const precio_mayor = lista.map(item => item.price).sort((a,b)=>b-a)[0]
     input_precio.setAttribute("max", precio_mayor)
 
 
-    contenedor_filtros.appendChild(lista_categorias);
-    lista_categorias.innerHTML=`<li class="categoria">Todos</li>`
-    categorias_no_rep.forEach(cate => {
-        lista_categorias.innerHTML+=`<li class="categoria">${cate}</li>`
-    })
+   
 
     lista_categorias.addEventListener("click", (evento)=>{
         const pulsado = evento.target
