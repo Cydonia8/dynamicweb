@@ -25,6 +25,7 @@
 
     $creartabla->execute();
     echo "---Tabla creada---<br>";
+    $creartabla->close();
 
     $insercion = $conexion->prepare("INSERT INTO $tablename (category, name, price, image, date, id) VALUES
 	('Signature Guitars', 'Music Man JP15 FM SB John Petrucci', 4440, 'https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/bdb/364295/10233915_800.jpg', '2015/08/01', 'gs147298'),
