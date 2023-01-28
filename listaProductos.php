@@ -37,9 +37,9 @@
     if($offset_actualizado < $total){
         $offset_siguiente = $offset_actualizado;
         if($offset_siguiente+$limite < $total){
-            $nuevo_limite = $limite;
+            $nuevo_limite = $limite_default;
         }else{
-            $nuevo_limite = $total -$offset_siguiente;
+            $nuevo_limite = $total - $offset_siguiente;
         }
         $info["next"] = $patron_url."?offset=$offset_siguiente&limite=$nuevo_limite";
     }else{
@@ -53,7 +53,7 @@
     if($offset_actualizado > 0){
         $offset_previo = $offset_actualizado;
         if($offset_previo-$limite > 0){
-            $nuevo_limite = $limite;
+            $nuevo_limite = $limite_default;
         }else{
             $nuevo_limite = $offset;
             $offset_previo = 0;
