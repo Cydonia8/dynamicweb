@@ -50,12 +50,12 @@
 
     $offset_actualizado = $offset - $limite;
 
-    if($offset_actualizado > 0){
+    if($offset_actualizado >= 0){
         $offset_previo = $offset_actualizado;
-        if($offset_previo-$limite > 0){
+        if($offset_previo-$limite >= 0){
             $nuevo_limite = $limite_default;
         }else{
-            $nuevo_limite = $offset;
+            $nuevo_limite = $limite_default;
             $offset_previo = 0;
         }
         $info["previous"] = $patron_url."?offset=$offset_previo&limite=$nuevo_limite";
