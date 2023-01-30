@@ -1,5 +1,6 @@
 <?php
     require_once "config.php";
+    
 
     $conexion = new mysqli($host, $user, $pass);
 
@@ -53,5 +54,5 @@
     echo "--Datos insertados correctamente--";
     $insercion->close();
     $conexion->close();
-
+    include "listaProductos.php";
 ?>

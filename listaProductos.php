@@ -29,7 +29,6 @@
     $info['datos'] = $datos;
     
     $patron_url = explode("?", $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'])[0];
-    // echo "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     
     //Determinamos el siguiente enlace
     $offset_actualizado = $offset + $limite;
