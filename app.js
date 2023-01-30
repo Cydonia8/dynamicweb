@@ -120,7 +120,7 @@ input_precio.addEventListener("change", ()=>{
     let filtro;
 
     input_precio.nextElementSibling.innerText=`Filtro máximo de ${valor} €`
-    filtro = lista.filter(item => parseFloat(item.price) < valor)
+    filtro = lista.filter(item => parseFloat(item.price) <= parseFloat(valor))
     console.log(filtro)
 
     if(filtro.length===0){
@@ -135,7 +135,7 @@ input_precio.addEventListener("change", ()=>{
 })
 
 InicializarTienda()
-console.log(siguiente.getAttribute("data-link"))
+
 const filtros_sticky_ul = document.querySelector(".filtros > ul")
 
 //Evento para colocar el menú de filtros en posición horizontal
@@ -159,7 +159,6 @@ async function InicializarTienda(url = "listaProductos.php"){
     const respuesta = await fetch(url)
     const datos = await respuesta.json();
     lista = datos["datos"];
-    console.log(datos)
 
     if(datos["next"] == "null"){
         siguiente.style.display="none"
@@ -192,6 +191,7 @@ async function InicializarTienda(url = "listaProductos.php"){
 
     //Determinar el precio más alto para ajustar el rango del input
     const precio_mayor = lista.map(item => item.price).sort((a,b)=>b-a)[0]
+    console.log(precio_mayor)
     input_precio.setAttribute("max", precio_mayor)
 
 
