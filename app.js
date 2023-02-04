@@ -191,7 +191,6 @@ async function InicializarTienda(url = "listaProductos.php"){
 
     //Determinar el precio más alto para ajustar el rango del input
     const precio_mayor = lista.map(item => item.price).sort((a,b)=>b-a)[0]
-    console.log(precio_mayor)
     input_precio.setAttribute("max", precio_mayor)
 
 
@@ -244,7 +243,7 @@ function crearProducto(p){
         const id = padre.getAttribute("data-id");
         contenido_modal.setAttribute("data-product", id)
 
-        const producto_buscado = productos.find(item => item.id === id);
+        const producto_buscado = lista.find(item => item.id === id);
         contenido_modal.innerHTML=`<img src="${producto_buscado.image}" alt="">
                                     <h3>${producto_buscado.name}</h3>
                                     <h3>${producto_buscado.price} €</h3>
@@ -265,7 +264,7 @@ function crearProducto(p){
                 unidades = 1
             }
             const product_id = evento.target.parentElement.parentElement.getAttribute("data-product")
-            const producto_buscar = productos.find(item => item.id===product_id)
+            const producto_buscar = lista.find(item => item.id===product_id)
             //Copia del producto con campo extra cantidad, en el que guardaremos las unidades añadidas
             let prod_campo_cantidad = {...producto_buscar, cantidad:unidades}
             
@@ -305,6 +304,7 @@ function crearProductoCarrito(producto){
                             </div>
                         </div>`
     total_precio+=producto.cantidad * producto.price
+    console.log(total_precio)
     actualizarPrecio(total_precio)
 
     const eliminar = prod_carrito.querySelector("#eliminar-producto")
@@ -312,8 +312,8 @@ function crearProductoCarrito(producto){
     const reducir_cantidad = prod_carrito.querySelector("#reducir-cantidad")
 
     eliminar.addEventListener("click", ()=>{
-        total_precio-=producto.cantidad * producto.price      
-        actualizarPrecio(total_precio)
+        total_precio-=producto.cantidad * parseFloat(producto.price)      
+        actualizarPrecio(parseFloat(total_precio))
         carrito.removeChild(prod_carrito)
         eliminarProductoLista(recuento_carrito, producto)
     })
@@ -321,14 +321,14 @@ function crearProductoCarrito(producto){
         producto["cantidad"]++
         evento.currentTarget.previousElementSibling.children[1].innerText=producto["cantidad"]
         console.log(producto["cantidad"])
-        total_precio+=producto["price"]
-        actualizarPrecio(total_precio)
+        total_precio+=parseFloat(producto["price"])
+        actualizarPrecio(parseFloat(total_precio))
         actualizarLista(recuento_carrito, producto)
     })
     reducir_cantidad.addEventListener("click", (evento)=>{
         producto["cantidad"]--
-        total_precio-=producto["price"]
-        actualizarPrecio(total_precio)
+        total_precio-=parseFloat(producto["price"])
+        actualizarPrecio(parseFloat(total_precio))
         if(producto["cantidad"] != 0){
             evento.currentTarget.previousElementSibling.previousElementSibling.children[1].innerText=producto["cantidad"]
             actualizarLista(recuento_carrito, producto)
