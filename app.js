@@ -29,6 +29,7 @@ const cerrar_modal = document.getElementById("cerrar-modal")
 
 //DOM para mostrar mensajes
 const contenedor_mensajes = document.querySelector(".contenedor-mensajes")
+const container_animacion = document.querySelector(".container-animacion")
 
 //DOM para estilo vertical
 const modo_vertical = document.getElementById("vertical")
@@ -60,8 +61,12 @@ siguiente.addEventListener("click", cambiarPagina);
 anterior.addEventListener("click", cambiarPagina);
 
 function cambiarPagina(eventos){
+    container_animacion.classList.add("mostrar-animacion")
     let url = eventos.target.getAttribute("data-link")
     InicializarTienda(url)
+    setTimeout(()=>{
+        container_animacion.classList.remove("mostrar-animacion")
+    },1000)
 }
 
 
@@ -156,6 +161,10 @@ modo_vertical.addEventListener("click", ()=>{
 
 //Colocamos los elementos básicos de la tienda, productos y categorias para filtrar
 async function InicializarTienda(url = "listaProductos.php"){
+    container_animacion.classList.add("mostrar-animacion")
+    setTimeout(()=>{
+        container_animacion.classList.remove("mostrar-animacion")
+    },1000)
     const respuesta = await fetch(url)
     const datos = await respuesta.json();
     lista = datos["datos"];
@@ -211,6 +220,7 @@ async function InicializarTienda(url = "listaProductos.php"){
             renderizar(filtro, contenedor_productos, crearProducto)
         }
     })
+    
 }
 
 //Funcion para crear el producto en el contenedor principal

@@ -6,7 +6,7 @@
 
     $conexion = new mysqli('localhost', 'root', '');
     $conexion->select_db($dbname);
-
+    sleep(1);
     $consulta_total = $conexion->query("select count(*) total from $tablename");
     $fila = $consulta_total->fetch_array(MYSQLI_ASSOC);
     $total = $fila['total'];
