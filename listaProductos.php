@@ -11,7 +11,7 @@
     $fila = $consulta_total->fetch_array(MYSQLI_ASSOC);
     $total = $fila['total'];
 
-    $limite_default = 3;
+    $limite_default = 4;//Arreglar problema con el límite al cambiar páginas
     // $consulta = $conexion->query("select * from $tablename");
     // while($fila = $consulta->fetch_array(MYSQLI_ASSOC)){
     //     $datos[] =
