@@ -248,6 +248,18 @@ header form input:checked{
     border-radius: 10px;
     transition: .7s;
 }
+#anterior{
+    margin-right: 2rem;
+}
+.paginadores button{
+    font-family: inherit;
+    padding: 0.5rem;
+    font-size: inherit;
+    background-color: rgba(33, 130, 190, 0.896);
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+}
 .producto{
     display: flex;
     background-color: #f3f3f3;

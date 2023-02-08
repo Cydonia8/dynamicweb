@@ -11,7 +11,7 @@
     $fila = $consulta_total->fetch_array(MYSQLI_ASSOC);
     $total = $fila['total'];
 
-    $limite_default = 4;//Arreglar problema con el límite al cambiar páginas
+    $limite_default = 3;//Arreglar problema con el límite al cambiar páginas
     // $consulta = $conexion->query("select * from $tablename");
     // while($fila = $consulta->fetch_array(MYSQLI_ASSOC)){
     //     $datos[] =
@@ -31,35 +31,68 @@
     $patron_url = explode("?", $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'])[0];
     
     //Determinamos el siguiente enlace
-    $offset_actualizado = $offset + $limite;
+    // $offset_actualizado = $offset + $limite;
 
-    if($offset_actualizado < $total){
-        $offset_siguiente = $offset_actualizado;
-        if($offset_siguiente+$limite < $total){
-            $nuevo_limite = $limite_default;
-        }else{
-            $nuevo_limite = $total - $offset_siguiente;
-        }
-        $info["next"] = $patron_url."?offset=$offset_siguiente&limite=$nuevo_limite";
-    }else{
-        $info["next"] = "null";
-    }
+    // if($offset_actualizado < $total){
+    //     $offset_siguiente = $offset_actualizado;
+    //     if($offset_siguiente+$limite < $total){
+    //         $nuevo_limite = $limite_default;
+    //     }else{
+    //         $nuevo_limite = $total - $offset_siguiente;
+    //     }
+    //     $info["next"] = $patron_url."?offset=$offset_siguiente&limite=$nuevo_limite";
+    // }else{
+    //     $info["next"] = "null";
+    // }
 
     //Determinamos el enlace previo
 
-    $offset_actualizado = $offset - $limite;
+    // $offset_actualizado = $offset - $limite;
 
-    if($offset_actualizado >= 0){
-        $offset_previo = $offset_actualizado;
-        if($offset_previo-$limite >= 0){
-            $nuevo_limite = $limite_default;
+    // if($offset_actualizado >= 0){
+    //     $offset_previo = $offset_actualizado;
+    //     if($offset_previo-$limite >= 0){
+    //         $nuevo_limite = $limite_default;
+    //     }else{
+    //         $nuevo_limite = $limite_default;
+    //         $offset_previo = 0;
+    //     }
+    //     $info["previous"] = $patron_url."?offset=$offset_previo&limite=$nuevo_limite";
+    // }else{
+    //     $info["previous"] = "null";
+    // }
+
+    $nuevo_offset=$offset+$limite;
+    if($nuevo_offset<$total){
+        $sig_offset=$nuevo_offset;
+        if($nuevo_offset+$limite>$total){
+            $sig_limite=$total-$nuevo_offset;
         }else{
-            $nuevo_limite = $limite_default;
-            $offset_previo = 0;
+            $sig_limite=$limite;
         }
-        $info["previous"] = $patron_url."?offset=$offset_previo&limite=$nuevo_limite";
+        $info["next"]=$patron_url."?offset=$sig_offset&limite=$sig_limite";  
+    
     }else{
-        $info["previous"] = "null";
+        $info["next"]="null";
+    }
+
+    // echo $info["siguiente"];
+
+    
+    $nuevo_offset=$offset-$limite;
+
+    if($offset==0){
+        $info["previous"]="null";
+    }else{
+        if($nuevo_offset>0){
+            $ant_limite=$limite_default;
+            $nuevo_offset=$offset-$limite_default;
+            $ant_offset=$nuevo_offset;
+        }else{
+            $ant_limite=$offset;
+            $ant_offset=0;
+        }
+        $info["previous"]=$patron_url."?offset=$ant_offset&limite=$ant_limite";  
     }
 
 
